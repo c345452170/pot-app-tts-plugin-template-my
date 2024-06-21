@@ -1,5 +1,5 @@
 {
-  "id": "[plugin].com.pot-app.lingva_tts",
+  "id": "plugin.com.pot-app.lingva_tts",
   "plugin_type": "tts",
   "icon": "lingva.svg",
   "display": "Lingva",
