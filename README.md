@@ -29,11 +29,23 @@
 编辑 `main.js` 实现 `tts` 函数
 
 #### 输入参数
-
 ```javascript
+// config: config map
+// detect: detected source language
+// setResult: function to set result text
+// utils: some tools
+//     http: tauri http module
+//     readBinaryFile: function
+//     readTextFile: function
+//     Database: tauri Database class
+//     CryptoJS: CryptoJS module
+//     cacheDir: cache dir path
+//     pluginDir: current plugin dir 
+//     osType: "Windows_NT" | "Darwin" | "Linux"
 async function tts(text, lang, options = {}) {
   const { config, utils } = options;
-  const { tauriFetch } = utils;
+  const { http, readBinaryFile, readTextFile, Database, CryptoJS, run, cacheDir, pluginDir, osType } = utils;
+  const { fetch, Body } = http;
 }
 ```
 
