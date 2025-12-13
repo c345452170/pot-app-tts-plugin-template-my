@@ -1,35 +1,13 @@
 {
-  "id": "plugin.com.pot-app.lingva_tts",
+  "id": "plugin.com.pot-app.edge_tts",
   "plugin_type": "tts",
   "icon": "lingva.svg",
-  "display": "Lingva",
+  "display": "Edge TTS",
   "homepage": "https://github.com/pot-app/pot-app-tts-plugin-template",
-  "needs": [{ "key": "requestPath", "display": "请求地址" }],
+  "needs": [
+    { "key": "voiceName", "display": "Voice Name", "type": "input" }
+  ],
   "language": {
-    "zh_cn": "zh",
-    "zh_tw": "zh_HANT",
-    "en": "en",
-    "ja": "ja",
-    "ko": "ko",
-    "fr": "fr",
-    "es": "es",
-    "ru": "ru",
-    "de": "de",
-    "it": "it",
-    "tr": "tr",
-    "pt_pt": "pt",
-    "pt_br": "pt",
-    "vi": "vi",
-    "id": "id",
-    "th": "th",
-    "ms": "ms",
-    "ar": "ar",
-    "hi": "hi",
-    "mn_cy": "mn",
-    "mn_mo": "mn",
-    "km": "km",
-    "nb_no": "no",
-    "nn_no": "no",
-    "fa": "fa"
+    "en": "en-US"
   }
 }
