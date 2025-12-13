@@ -1,34 +1,61 @@
-name: Build
-on: push
-permissions: write-all
+name: Build and Release Plugin
 
+# 1. 定义触发条件
+on:
+  # 监听推送事件
+  push:
+    # 监听所有分支的推送（你也可以指定特定的分支，如 branches: [main]）
+    branches: ['**']
+  # 监听特定标签格式的推送（v开头的版本号）
+  push:
+    tags:
+      - 'v*'
+
+# 2. 定义工作
 jobs:
   build:
+    # 指定运行环境，Ubuntu最常用
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout
+      # 步骤1：检出仓库代码
+      - name: Checkout code
         uses: actions/checkout@v4
+
+      # 步骤2：设置 Node.js 环境（示例为JavaScript插件，可根据你的技术栈调整）
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
-          fetch-depth: 1
-      - name: Install zip
-        run: sudo apt-get install -y jq
-      - id: getname
+          node-version: '18'
+
+      # 步骤3：安装依赖并打包
+      - name: Install dependencies and build
         run: |
-          echo "NAME=$(cat info.json | jq '.id' | tr -d '"')" >> "$GITHUB_ENV"
-          echo "ICON=$(cat info.json | jq '.icon' | tr -d '"')" >> "$GITHUB_ENV"
-      - uses: vimtor/action-zip@v1
-        with:
-          files: info.json ${{ env.ICON }} main.js
-          dest: ${{ env.NAME }}.potext
-      - name: Upload Artifacts
+          npm install
+          npm run build  # 请确保你的 package.json 中有对应的构建脚本
+
+      # 步骤4：上传打包文件到 Artifact（每次推送都执行）
+      - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ env.NAME }}.potext
-          path: "*.potext"
-          if-no-files-found: error
-      - name: Upload Release
-        if: startsWith(github.ref, 'refs/tags')
-        uses: softprops/action-gh-release@v2
+          name: plugin-package
+          path: dist/  # 请将此路径修改为你打包产物所在的真实目录
+          retention-days: 7  # Artifact 保留7天
+
+      # 步骤5：发布到 GitHub Release（仅当推送的是标签时执行）
+      - name: Create Release and Upload Assets
+        # 使用官方 action 来创建发布版
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/v')  # 关键：仅当推送的是v开头的标签时运行此步骤
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          files: "*.potext"
+          # 从标签名中提取版本号（去掉前面的‘v’）
+          tag_name: ${{ github.ref_name }}
+          name: Release ${{ github.ref_name }}
+          # 将打包产物作为发布版附件上传
+          files: |
+            dist/*.zip  # 请修改此文件模式以匹配你实际的打包文件（如：dist/*.js, dist/*.jar）
+          draft: false
+          prerelease: false
+        env:
+          # 必须提供 GitHub Token 才能创建 Release
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # 这是 GitHub 自动提供的，无需额外配置
