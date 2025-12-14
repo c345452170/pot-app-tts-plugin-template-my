@@ -2,7 +2,7 @@
   "id": "plugin.com.pot-app.wangwang_tts",
   "plugin_type": "tts",
   "icon": "lingva.svg",
-  "display": "旺旺 TTS",
+  "display": "Edge TTS",
   "homepage": "https://tts.wangwangit.com",
   "needs": [
     { "key": "requestPath", "display": "API 地址", "type": "input" },
