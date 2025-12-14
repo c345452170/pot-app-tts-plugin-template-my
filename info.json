@@ -1,13 +1,38 @@
 {
-  "id": "plugin.com.pot-app.edge_tts",
+  "id": "plugin.com.pot-app.wangwang_tts",
   "plugin_type": "tts",
   "icon": "lingva.svg",
-  "display": "Edge TTS",
-  "homepage": "https://github.com/pot-app/pot-app-tts-plugin-template",
+  "display": "旺旺 TTS",
+  "homepage": "https://tts.wangwangit.com",
   "needs": [
-    { "key": "voiceName", "display": "Voice Name", "type": "input" }
+    { "key": "requestPath", "display": "API 地址", "type": "input" },
+    {
+      "key": "voice",
+      "display": "发音人",
+      "type": "select",
+      "options": {
+        "zh-CN-XiaoxiaoNeural": "晓晓（女）",
+        "zh-CN-YunxiNeural": "云希（男）",
+        "zh-CN-YunyangNeural": "云扬（男）",
+        "en-US-JennyNeural": "Jenny (英文)"
+      }
+    },
+    { "key": "speed", "display": "语速（0.5-2.0）", "type": "input" },
+    { "key": "pitch", "display": "音调（-100~100）", "type": "input" },
+    {
+      "key": "style",
+      "display": "风格",
+      "type": "select",
+      "options": {
+        "general": "通用",
+        "chat": "聊天",
+        "angry": "愤怒",
+        "cheerful": "欢快"
+      }
+    }
   ],
   "language": {
-    "en": "en-US"
+    "en": "en-US",
+    "zh-CN": "zh-CN"
   }
 }
